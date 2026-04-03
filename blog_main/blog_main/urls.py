@@ -23,15 +23,17 @@ from blog_main import views
 from django.contrib.auth import views as auth_views
 from django.conf.urls.static import static
 from django.conf import settings
+from blogs import views as Blogsview
 
 urlpatterns = [
     path('admin/', admin.site.urls),
 
     # Home
     path('', views.home, name='home'),
+    path('<slug:slug>/',Blogsview.blogs, name='blogs'),
 
     # Search
-    path('search/', views.search, name='search'),
+    path('blogs/search/', Blogsview.search, name='search'),
     path('category/',include('blogs.urls')),
 
     # Auth (IMPORTANT)
