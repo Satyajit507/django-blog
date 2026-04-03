@@ -55,13 +55,14 @@ ROOT_URLCONF = 'blog_main.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': ['templates'],
+        'DIRS': [BASE_DIR/'templates'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'blogs.context_processors.get_categories',
             ],
         },
     },
@@ -115,15 +116,15 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/6.0/howto/static-files/
 
-STATIC_URL = 'static/'
-STATIC_ROOT = BASE_DIR /'static'
-STATICFILES_DIRS=[
-    'blog_main/static',
-]
+STATIC_URL = '/static/'
 
+STATICFILES_DIRS = [
+    BASE_DIR / "blog_main" / "static",
+]
 # Authentication redirects
 LOGIN_REDIRECT_URL = 'dashboard'
 LOGOUT_REDIRECT_URL = 'home'
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR/'media'
+

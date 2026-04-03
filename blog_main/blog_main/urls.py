@@ -32,6 +32,7 @@ urlpatterns = [
 
     # Search
     path('search/', views.search, name='search'),
+    path('category/',include('blogs.urls')),
 
     # Auth (IMPORTANT)
     path('login/', auth_views.LoginView.as_view(template_name='login.html'), name='login'),

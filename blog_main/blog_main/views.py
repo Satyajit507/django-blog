@@ -1,11 +1,21 @@
 
 from django.shortcuts import render, redirect
+from blogs.models import Blog, Category
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.decorators import login_required
 
 
 def home(request):
-    return render(request, 'home.html')
+
+    featured_posts = Blog.objects.filter(is_featured=True, status='published').order_by('updated_at')
+    posts = Blog.objects.filter(is_featured=False, status ='published')
+    
+    context={
+        
+        'featured_posts': featured_posts,
+        'posts':posts,
+    }
+    return render(request, 'home.html',context)
 
 
 def search(request):
