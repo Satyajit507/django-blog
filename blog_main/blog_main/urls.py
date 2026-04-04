@@ -37,12 +37,13 @@ urlpatterns = [
     path('category/',include('blogs.urls')),
 
     # Auth (IMPORTANT)
-    path('login/', auth_views.LoginView.as_view(template_name='login.html'), name='login'),
-    path('logout/', auth_views.LogoutView.as_view(next_page='home'), name='logout'),
+    #path('login/', auth_views.LoginView.as_view(template_name='login.html'), name='login'),
+    #path('logout/', auth_views.LogoutView.as_view(next_page='home'), name='logout'),
 
     # Custom views
     path('register/', views.register, name='register'),
     path('login/',views.login,name='login'),
-    path('dashboard/', views.dashboard, name='dashboard'),
+    #path('dashboard/', views.dashboard, name='dashboard'),
     path('logout/',views.logout,name='logout'),
+    path('dashboard/',include('dashboards.urls')),
 ]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

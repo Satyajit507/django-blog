@@ -58,13 +58,13 @@ def login(request):
             user= auth.authenticate(username=username,password=password)
             if user is not None:
                 auth.login(request,user)
-            return redirect('home')    
+            return redirect('dashboard')    
 
     form = AuthenticationForm()
     context={
         'form':form,
     }
-    return render(request,'login.html')
+    return render(request,'login.html' ,context)
    
 
 def logout(request):
@@ -80,6 +80,6 @@ def logout(request):
    # return render(request, 'register.html', {'form': form})
 
 
-@login_required
-def dashboard(request):
-    return render(request, 'dashboard.html')
+#@login_required
+#def dashboard(request):
+   # return render(request, 'dashboard.html')
