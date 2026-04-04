@@ -30,7 +30,7 @@ urlpatterns = [
 
     # Home
     path('', views.home, name='home'),
-    path('<slug:slug>/',Blogsview.blogs, name='blogs'),
+    path('blogs/<slug:slug>/',Blogsview.blogs, name='blogs'),
 
     # Search
     path('blogs/search/', Blogsview.search, name='search'),
@@ -42,5 +42,7 @@ urlpatterns = [
 
     # Custom views
     path('register/', views.register, name='register'),
+    path('login/',views.login,name='login'),
     path('dashboard/', views.dashboard, name='dashboard'),
+    path('logout/',views.logout,name='logout'),
 ]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
