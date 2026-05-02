@@ -1,93 +1,92 @@
+{% extends 'base.html' %}
 
- {% extends 'base.html'%}
- {% block content %}
-  <!-- Featured Post -->
-   {% for post in featured_posts %}
-   {%if forloop.first %}
-  <div class="jumbotron p-3 p-mb-5 text-white rounded bg-dark"
-     style="background-image: url({{post.featured_image.url}}); background-blend-mode: overlay; background-size: cover;">
-  <div class="col-md-8 px-0">
-    <h3 class="display-4 font-italic">{{ post.title}}</h3>
-    <p class="lead my-3">
-      {{post.short_description}}
-    </p>
-    <p class="lead mb-0"><a href="{% url 'blogs' post.slug %}" class="text-white font-weight-bold">continue reading...</a></p>
-  </div>
-  </div>
-  {%endif%}
-  {% endfor%}
+{% block content %}
 
-  <!-- Post Cards -->
-   <h3 class="text-uppercase text-warning" style="letter-spacing:2px">Featured posts</h3>
-  <div class="row mb-2">
-   {% for post in featured_posts %} 
-   {% if not forloop.first %}
+<!-- Featured Post -->
+{% for post in featured_posts %}
+  {% if forloop.first %}
+  <div class="jumbotron p-3 text-white rounded bg-dark"
+       style="background-image: url({{ post.featured_image.url }}); background-blend-mode: overlay; background-size: cover;">
+    <div class="col-md-8 px-0">
+      <h3 class="display-4 font-italic">{{ post.title }}</h3>
+      <p class="lead my-3">{{ post.short_description }}</p>
+      <p class="lead mb-0">
+        <a href="{% url 'blogs' post.slug %}" class="text-white font-weight-bold">continue reading...</a>
+      </p>
+    </div>
+  </div>
+  {% endif %}
+{% endfor %}
+
+<!-- Featured Posts -->
+<h3 class="text-uppercase text-warning">Featured posts</h3>
+<div class="row mb-2">
+  {% for post in featured_posts %}
+    {% if not forloop.first %}
     <div class="col-md-6">
-      <div class=" card border-0">
+      <div class="card border-0">
         <div class="card-body">
-        <h3><a href="{% url 'blogs' post.slug %}" class="text-dark">{{post.title}}</a></h3>
-        <small class="text-muted">{{post.created_at|timesince}} ago| {{post.author}}</small>
-        <p class="card-text">
-          {{post.short_description | truncatewords:25}}
-        </p>
+          <h3><a href="{% url 'blogs' post.slug %}" class="text-dark">{{ post.title }}</a></h3>
+          <small class="text-muted">{{ post.created_at|timesince }} ago | {{ post.author }}</small>
+          <p>{{ post.short_description|truncatewords:25 }}</p>
+        </div>
       </div>
     </div>
-  </div>
-  {%endif%}
-  {%endfor%}
+    {% endif %}
+  {% endfor %}
 </div>
 
-    
+<!-- Main Content -->
+<h3 class="text-uppercase text-warning">Recent Articles</h3>
+<div class="row">
 
-  <!-- Main Content -->
-<h3 class="text-uppercase text-warning" style="letter-spacing:2px">Recent Articles</h3>   
-<main role="main" class="container p-0" >    
-  <div class="row">
-    <div class="col-md-8 blog-main">
-      {%for post in posts%}
-        <div class=" card border-0">
-        <div class="card-body">
-        <h3><a href="{% url 'blogs' post.slug %}" class="text-dark">{{post.title}}</a></h3>
-        <small class="text-muted">{{post.created_at|timesince}} ago| {{post.author}}</small>
-        <p class="card-text">
-          {{post.short_description|truncatewords:20}}
-        </p>
+  <!-- Left Column: Posts -->
+  <div class="col-md-8 blog-main">
+    {% for post in posts %}
+    <div class="card border-0 mb-3">
+      <div class="card-body">
+        <h3><a href="{% url 'blogs' post.slug %}" class="text-dark">{{ post.title }}</a></h3>
+        <small class="text-muted">{{ post.created_at|timesince }} ago | {{ post.author }}</small>
+        <p>{{ post.short_description|truncatewords:20 }}</p>
       </div>
     </div>
-    {% endfor%}
+    {% endfor %}
+  </div>
 
+  <!-- Right Sidebar -->
+  <aside class="col-md-4 blog-sidebar">
 
+    <!-- About -->
+    <div class="card mb-3 p-3 bg-light rounded">
+      <h4>{{ about.about_heading }}</h4>
+      <p>{{ about.about_description }}</p>
     </div>
-    
-    <!-- Blog Content -->
-  
-    
 
-    <!-- Sidebar -->
-  <aside  class="col-md-4 blog-sidebar"> 
-    
-      <div class="p-3 bg-light rounded">
-        <h4 class="font-italic">{{about.about_heading}}</h4>
-        <p class="mb-0">{{about.about_description}}</p>
-      </div>
-
-      
-       {% if social_links%}
-      <div class="p-3">
-        <h4>Follow us</h4>
-        <ul class="list-unstyled">
-          {% for i in social_links%}
-          <li><a href="{{i.link}}" target="_blank">{{i.platform}}</a></li>
-          {% endfor%}
+    <!-- Categories -->
+    <div class="card mb-3 p-3">
+      <h4>Categories</h4>
+      <ul class="list-unstyled">
+        {% for category in categories %}
+        <li><a href="{% url 'posts_by_category' category.id %}">{{ category.category_name }}</a>
           
-        </ul>
-      </div>
-      {% endif %}
+        </li>
+        {% endfor %}
+      </ul>
+    </div>
 
+    <!-- Social Links -->
+    {% if social_links %}
+    <div class="card mb-3 p-3">
+      <h4>Follow us</h4>
+      <ul class="list-unstyled">
+        {% for link in social_links %}
+        <li><a href="{{ link.link }}" target="_blank">{{ link.platform }}</a></li>
+        {% endfor %}
+      </ul>
+    </div>
+    {% endif %}
 
-  </div>
-
+  </aside>
 </div>
-{% endblock%}
-</body>
-</html>
+
+{% endblock %}

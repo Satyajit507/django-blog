@@ -19,31 +19,157 @@ Including another URLconf
 
 from django.contrib import admin
 from django.urls import path, include
-from blog_main import views
-from django.contrib.auth import views as auth_views
-from django.conf.urls.static import static
 from django.conf import settings
+from django.conf.urls.static import static
+
+from blog_main import views
 from blogs import views as Blogsview
+
 
 urlpatterns = [
     path('admin/', admin.site.urls),
 
-    # Home
+    # 🏠 HOME
     path('', views.home, name='home'),
-    path('blogs/<slug:slug>/',Blogsview.blogs, name='blogs'),
 
-    # Search
+    # 📖 BLOG DETAIL
+    path('blogs/<slug:slug>/', Blogsview.blogs, name='blogs'),
+
+    # 🔍 SEARCH
     path('blogs/search/', Blogsview.search, name='search'),
-    path('category/',include('blogs.urls')),
 
-    # Auth (IMPORTANT)
-    #path('login/', auth_views.LoginView.as_view(template_name='login.html'), name='login'),
-    #path('logout/', auth_views.LogoutView.as_view(next_page='home'), name='logout'),
+    # 📂 CATEGORY APP
+    path('category/', include('blogs.urls')),
 
-    # Custom views
+    # 🧑‍💻 DASHBOARD APP
+    path('dashboard/', include('dashboards.urls')),
+
+    # 👤 AUTH
     path('register/', views.register, name='register'),
-    path('login/',views.login,name='login'),
-    #path('dashboard/', views.dashboard, name='dashboard'),
-    path('logout/',views.logout,name='logout'),
-    path('dashboard/',include('dashboards.urls')),
-]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+    path('login/', views.login, name='login'),
+    path('logout/', views.logout, name='logout'),
+
+    # ❤️ LIKE COMMENT (IMPORTANT)
+    
+    path('like-comment/<int:comment_id>/', Blogsview.like_comment, name='like_comment'),
+
+    
+
+]
+"""
+URL configuration for blog_main project.
+
+The `urlpatterns` list routes URLs to views. For more information please see:
+    https://docs.djangoproject.com/en/6.0/topics/http/urls/
+Examples:
+Function views
+    1. Add an import:  from my_app import views
+    2. Add a URL to urlpatterns:  path('', views.home, name='home')
+Class-based views
+    1. Add an import:  from other_app.views import Home
+    2. Add a URL to urlpatterns:  path('', Home.as_view(), name='home')
+Including another URLconf
+    1. Import the include() function: from django.urls import include, path
+    2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
+"""
+
+
+
+from django.contrib import admin
+from django.urls import path, include
+from django.conf import settings
+from django.conf.urls.static import static
+
+from blog_main import views
+from blogs import views as Blogsview
+
+
+urlpatterns = [
+    path('admin/', admin.site.urls),
+
+    # 🏠 HOME
+    path('', views.home, name='home'),
+
+    # 📖 BLOG DETAIL
+    path('blogs/<slug:slug>/', Blogsview.blogs, name='blogs'),
+
+    # 🔍 SEARCH
+    path('blogs/search/', Blogsview.search, name='search'),
+
+    # 📂 CATEGORY APP
+    path('category/', include('blogs.urls')),
+
+    # 🧑‍💻 DASHBOARD APP
+    path('dashboard/', include('dashboards.urls')),
+
+    # 👤 AUTH
+    path('register/', views.register, name='register'),
+    path('login/', views.login, name='login'),
+    path('logout/', views.logout, name='logout'),
+
+    # ❤️ LIKE COMMENT (IMPORTANT)
+    
+    path('like-comment/<int:comment_id>/', Blogsview.like_comment, name='like_comment'),
+
+
+]
+"""
+URL configuration for blog_main project.
+
+The `urlpatterns` list routes URLs to views. For more information please see:
+    https://docs.djangoproject.com/en/6.0/topics/http/urls/
+Examples:
+Function views
+    1. Add an import:  from my_app import views
+    2. Add a URL to urlpatterns:  path('', views.home, name='home')
+Class-based views
+    1. Add an import:  from other_app.views import Home
+    2. Add a URL to urlpatterns:  path('', Home.as_view(), name='home')
+Including another URLconf
+    1. Import the include() function: from django.urls import include, path
+    2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
+"""
+
+
+
+from django.contrib import admin
+from django.urls import path, include
+from django.conf import settings
+from django.conf.urls.static import static
+
+from blog_main import views
+from blogs import views as Blogsview
+
+
+urlpatterns = [
+    path('admin/', admin.site.urls),
+
+    # 🏠 HOME
+    path('', views.home, name='home'),
+
+    # 📖 BLOG DETAIL
+    path('blogs/<slug:slug>/', Blogsview.blogs, name='blogs'),
+
+    # 🔍 SEARCH
+    path('blogs/search/', Blogsview.search, name='search'),
+
+    # 📂 CATEGORY APP
+    path('category/', include('blogs.urls')),
+
+    # 🧑‍💻 DASHBOARD APP
+    path('dashboard/', include('dashboards.urls')),
+
+    # 👤 AUTH
+    path('register/', views.register, name='register'),
+    path('login/', views.login, name='login'),
+    path('logout/', views.logout, name='logout'),
+
+    # ❤️ LIKE COMMENT (IMPORTANT)
+    
+    path('like-comment/<int:comment_id>/', Blogsview.like_comment, name='like_comment'),
+
+]
+
+if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+
